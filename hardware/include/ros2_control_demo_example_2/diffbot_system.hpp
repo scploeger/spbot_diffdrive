@@ -43,7 +43,7 @@ namespace ros2_control_demo_example_2
       std::string left_wheel_name = "";
       std::string right_wheel_name = "";
       float loop_rate = 0.0;
-      std::string device = "";
+      std::string device = ""; // TODO: Update serial path to Arduino here
       int baud_rate = 0;
       int timeout_ms = 0;
       int enc_counts_per_rev = 0;
@@ -89,6 +89,7 @@ namespace ros2_control_demo_example_2
 
   private:
     ArduinoComms comms_;
+    Config cfg_;
   };
 
 } // namespace ros2_control_demo_example_2
