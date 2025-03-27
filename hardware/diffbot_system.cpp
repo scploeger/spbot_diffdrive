@@ -145,15 +145,9 @@ hardware_interface::CallbackReturn DiffBotSystemHardware::on_activate(
 hardware_interface::CallbackReturn DiffBotSystemHardware::on_deactivate(
   const rclcpp_lifecycle::State & /*previous_state*/)
 {
-  // BEGIN: This part here is for exemplary purposes - Please do not copy to your production code
   RCLCPP_INFO(get_logger(), "Deactivating ...please wait...");
 
-  for (auto i = 0; i < hw_stop_sec_; i++)
-  {
-    rclcpp::sleep_for(std::chrono::seconds(1));
-    RCLCPP_INFO(get_logger(), "%.1f seconds left...", hw_stop_sec_ - i);
-  }
-  // END: This part here is for exemplary purposes - Please do not copy to your production code
+  // comms_.disconnect here
 
   RCLCPP_INFO(get_logger(), "Successfully deactivated!");
 
@@ -163,24 +157,8 @@ hardware_interface::CallbackReturn DiffBotSystemHardware::on_deactivate(
 hardware_interface::return_type DiffBotSystemHardware::read(
   const rclcpp::Time & /*time*/, const rclcpp::Duration & period)
 {
-  // BEGIN: This part here is for exemplary purposes - Please do not copy to your production code
-  std::stringstream ss;
-  ss << "Reading states:";
-  for (std::size_t i = 0; i < hw_velocities_.size(); i++)
-  {
-    // Simulate DiffBot wheels's movement as a first-order system
-    // Update the joint status: this is a revolute joint without any limit.
-    // Simply integrates
-    hw_positions_[i] = hw_positions_[i] + period.seconds() * hw_velocities_[i];
 
-    ss << std::fixed << std::setprecision(2) << std::endl
-       << "\t"
-          "position "
-       << hw_positions_[i] << " and velocity " << hw_velocities_[i] << " for '"
-       << info_.joints[i].name.c_str() << "'!";
-  }
-  RCLCPP_INFO_THROTTLE(get_logger(), *get_clock(), 500, "%s", ss.str().c_str());
-  // END: This part here is for exemplary purposes - Please do not copy to your production code
+  // comms_.read_encoder_values();
 
   return hardware_interface::return_type::OK;
 }
@@ -188,19 +166,8 @@ hardware_interface::return_type DiffBotSystemHardware::read(
 hardware_interface::return_type ros2_control_demo_example_2 ::DiffBotSystemHardware::write(
   const rclcpp::Time & /*time*/, const rclcpp::Duration & /*period*/)
 {
-  // BEGIN: This part here is for exemplary purposes - Please do not copy to your production code
-  std::stringstream ss;
-  ss << "Writing commands:";
-  for (auto i = 0u; i < hw_commands_.size(); i++)
-  {
-    // Simulate sending commands to the hardware
-    hw_velocities_[i] = hw_commands_[i];
 
-    ss << std::fixed << std::setprecision(2) << std::endl
-       << "\t" << "command " << hw_commands_[i] << " for '" << info_.joints[i].name.c_str() << "'!";
-  }
-  RCLCPP_INFO_THROTTLE(get_logger(), *get_clock(), 500, "%s", ss.str().c_str());
-  // END: This part here is for exemplary purposes - Please do not copy to your production code
+  // comms_.set_encoder_values();
 
   return hardware_interface::return_type::OK;
 }
