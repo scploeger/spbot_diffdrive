@@ -73,18 +73,6 @@ public:
 
 private:
     ArduinoComms comms_; 
-  // Parameters for the DiffBot simulation
-  double hw_start_sec_;
-  double hw_stop_sec_;
-
-  // Objects for logging
-  std::shared_ptr<rclcpp::Logger> logger_;
-  rclcpp::Clock::SharedPtr clock_;
-
-  // Store the command for the simulated robot
-  std::vector<double> hw_commands_;
-  std::vector<double> hw_positions_;
-  std::vector<double> hw_velocities_;
 };
 
 }  // namespace ros2_control_demo_example_2
