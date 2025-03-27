@@ -130,8 +130,8 @@ hardware_interface::CallbackReturn DiffBotSystemHardware::on_activate(
   const rclcpp_lifecycle::State & /*previous_state*/)
 {
   RCLCPP_INFO(get_logger(), "Activating ...please wait...");
-  
-  // comms_.connect here
+
+  comms_.connect(cfg_.device, cfg_.baud_rate, cfg_.timeout_ms);
 
   RCLCPP_INFO(get_logger(), "Successfully activated!");
 
@@ -143,7 +143,7 @@ hardware_interface::CallbackReturn DiffBotSystemHardware::on_deactivate(
 {
   RCLCPP_INFO(get_logger(), "Deactivating ...please wait...");
 
-  // comms_.disconnect here
+  comms_.disconnect();
 
   RCLCPP_INFO(get_logger(), "Successfully deactivated!");
 
