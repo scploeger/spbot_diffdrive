@@ -35,46 +35,62 @@
 
 namespace ros2_control_demo_example_2
 {
-class DiffBotSystemHardware : public hardware_interface::SystemInterface
-{
-public:
-  RCLCPP_SHARED_PTR_DEFINITIONS(DiffBotSystemHardware);
+  class DiffBotSystemHardware : public hardware_interface::SystemInterface
+  {
 
-  hardware_interface::CallbackReturn on_init(
-    const hardware_interface::HardwareInfo & info) override;
+    struct Config
+    {
+      std::string left_wheel_name = "";
+      std::string right_wheel_name = "";
+      float loop_rate = 0.0;
+      std::string device = "";
+      int baud_rate = 0;
+      int timeout_ms = 0;
+      int enc_counts_per_rev = 0;
+      int pid_p = 0;
+      int pid_d = 0;
+      int pid_i = 0;
+      int pid_o = 0;
+    };
 
-  std::vector<hardware_interface::StateInterface> export_state_interfaces() override;
+  public:
+    RCLCPP_SHARED_PTR_DEFINITIONS(DiffBotSystemHardware);
 
-  std::vector<hardware_interface::CommandInterface> export_command_interfaces() override;
+    hardware_interface::CallbackReturn on_init(
+        const hardware_interface::HardwareInfo &info) override;
 
-  hardware_interface::CallbackReturn on_activate(
-    const rclcpp_lifecycle::State & previous_state) override;
+    std::vector<hardware_interface::StateInterface> export_state_interfaces() override;
 
-  hardware_interface::CallbackReturn on_deactivate(
-    const rclcpp_lifecycle::State & previous_state) override;
+    std::vector<hardware_interface::CommandInterface> export_command_interfaces() override;
 
-  hardware_interface::return_type read(
-    const rclcpp::Time & time, const rclcpp::Duration & period) override;
+    hardware_interface::CallbackReturn on_activate(
+        const rclcpp_lifecycle::State &previous_state) override;
 
-  hardware_interface::return_type write(
-    const rclcpp::Time & time, const rclcpp::Duration & period) override;
+    hardware_interface::CallbackReturn on_deactivate(
+        const rclcpp_lifecycle::State &previous_state) override;
 
-  /// Get the logger of the SystemInterface.
-  /**
-   * \return logger of the SystemInterface.
-   */
-  rclcpp::Logger get_logger() const { return *logger_; }
+    hardware_interface::return_type read(
+        const rclcpp::Time &time, const rclcpp::Duration &period) override;
 
-  /// Get the clock of the SystemInterface.
-  /**
-   * \return clock of the SystemInterface.
-   */
-  rclcpp::Clock::SharedPtr get_clock() const { return clock_; }
+    hardware_interface::return_type write(
+        const rclcpp::Time &time, const rclcpp::Duration &period) override;
 
-private:
-    ArduinoComms comms_; 
-};
+    /// Get the logger of the SystemInterface.
+    /**
+     * \return logger of the SystemInterface.
+     */
+    rclcpp::Logger get_logger() const { return *logger_; }
 
-}  // namespace ros2_control_demo_example_2
+    /// Get the clock of the SystemInterface.
+    /**
+     * \return clock of the SystemInterface.
+     */
+    rclcpp::Clock::SharedPtr get_clock() const { return clock_; }
 
-#endif  // ROS2_CONTROL_DEMO_EXAMPLE_2__DIFFBOT_SYSTEM_HPP_
+  private:
+    ArduinoComms comms_;
+  };
+
+} // namespace ros2_control_demo_example_2
+
+#endif // ROS2_CONTROL_DEMO_EXAMPLE_2__DIFFBOT_SYSTEM_HPP_
