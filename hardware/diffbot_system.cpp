@@ -48,6 +48,9 @@ hardware_interface::CallbackReturn DiffBotSystemHardware::on_init( // on_init ge
   cfg_.timeout_ms = std::stoi(info_.hardware_parameters["timeout_ms"]);
   cfg_.enc_counts_per_rev = std::stoi(info_.hardware_parameters["enc_counts_per_rev"]);
 
+  wheel_l_.setup(cfg_.left_wheel_name, cfg_.enc_counts_per_rev);
+  wheel_r_.setup(cfg_.right_wheel_name, cfg_.enc_counts_per_rev);
+
   for (const hardware_interface::ComponentInfo & joint : info_.joints) // loop through and check joints (ensure only 1 cmd interface, 2 state interfaces - pos and vel)
   {
     // DiffBotSystem has exactly two states and one command interface on each joint
