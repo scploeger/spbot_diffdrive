@@ -31,6 +31,8 @@
 #include "rclcpp_lifecycle/node_interfaces/lifecycle_node_interface.hpp"
 #include "rclcpp_lifecycle/state.hpp"
 
+#include "ros2_control_demo_example_2/arduino_comms.hpp"
+
 namespace ros2_control_demo_example_2
 {
 class DiffBotSystemHardware : public hardware_interface::SystemInterface
@@ -70,6 +72,7 @@ public:
   rclcpp::Clock::SharedPtr get_clock() const { return clock_; }
 
 private:
+    ArduinoComms comms_; 
   // Parameters for the DiffBot simulation
   double hw_start_sec_;
   double hw_stop_sec_;
