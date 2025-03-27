@@ -133,9 +133,9 @@ std::vector<hardware_interface::CommandInterface> DiffBotSystemHardware::export_
 hardware_interface::CallbackReturn DiffBotSystemHardware::on_activate(
   const rclcpp_lifecycle::State & /*previous_state*/)
 {
-  // BEGIN: This part here is for exemplary purposes - Please do not copy to your production code
   RCLCPP_INFO(get_logger(), "Activating ...please wait...");
 
+  // comms_.connect here
 
   RCLCPP_INFO(get_logger(), "Successfully activated!");
 
