@@ -4,6 +4,7 @@
 #include <string>
 #include <cmath>
 
+// code from: https://github.com/joshnewans/diffdrive_arduino/blob/humble/hardware/include/diffdrive_arduino/wheel.hpp
 
 class Wheel
 {
