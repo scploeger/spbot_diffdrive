@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "ros2_control_demo_example_2/diffbot_system.hpp"
+#include "spbot_diffdrive/diffbot_system.hpp"
 
 #include <chrono>
 #include <cmath>
@@ -27,9 +27,9 @@
 #include "hardware_interface/types/hardware_interface_type_values.hpp"
 #include "rclcpp/rclcpp.hpp"
 
-namespace ros2_control_demo_example_2
+namespace spbot_diffdrive
 {
-hardware_interface::CallbackReturn DiffBotSystemHardware::on_init( // on_init gets HarwareInfo from xacro file (diffbot.ros2_control.xacro)
+hardware_interface::CallbackReturn SPBotDiffDriveHardware::on_init( // on_init gets HarwareInfo from xacro file (diffbot.ros2_control.xacro)
   const hardware_interface::HardwareInfo & info) 
 {
   if (
@@ -103,7 +103,7 @@ hardware_interface::CallbackReturn DiffBotSystemHardware::on_init( // on_init ge
 
 // This is how we tell ROS2 Control what our hadware interface is acessible
 // Ie. what can we read (get state feedback from) and what we can command
-std::vector<hardware_interface::StateInterface> DiffBotSystemHardware::export_state_interfaces()
+std::vector<hardware_interface::StateInterface> SPBotDiffDriveHardware::export_state_interfaces()
 {
   std::vector<hardware_interface::StateInterface> state_interfaces; // declare a state interface vector
   for (auto i = 0u; i < info_.joints.size(); i++) // for each joint...
@@ -121,7 +121,7 @@ std::vector<hardware_interface::StateInterface> DiffBotSystemHardware::export_st
   return state_interfaces;
 }
 
-std::vector<hardware_interface::CommandInterface> DiffBotSystemHardware::export_command_interfaces()
+std::vector<hardware_interface::CommandInterface> SPBotDiffDriveHardware::export_command_interfaces()
 {
   std::vector<hardware_interface::CommandInterface> command_interfaces;
 
@@ -134,7 +134,7 @@ std::vector<hardware_interface::CommandInterface> DiffBotSystemHardware::export_
   return command_interfaces;
 }
 
-hardware_interface::CallbackReturn DiffBotSystemHardware::on_activate(
+hardware_interface::CallbackReturn SPBotDiffDriveHardware::on_activate(
   const rclcpp_lifecycle::State & /*previous_state*/)
 {
   RCLCPP_INFO(rclcpp::get_logger("DiffBotSystem"), "Activating ...please wait...");
@@ -146,7 +146,7 @@ hardware_interface::CallbackReturn DiffBotSystemHardware::on_activate(
   return hardware_interface::CallbackReturn::SUCCESS;
 }
 
-hardware_interface::CallbackReturn DiffBotSystemHardware::on_deactivate(
+hardware_interface::CallbackReturn SPBotDiffDriveHardware::on_deactivate(
   const rclcpp_lifecycle::State & /*previous_state*/)
 {
   RCLCPP_INFO(rclcpp::get_logger("DiffBotSystem"), "Deactivating ...please wait...");
@@ -158,7 +158,7 @@ hardware_interface::CallbackReturn DiffBotSystemHardware::on_deactivate(
   return hardware_interface::CallbackReturn::SUCCESS;
 }
 
-hardware_interface::return_type DiffBotSystemHardware::read(
+hardware_interface::return_type SPBotDiffDriveHardware::read(
   const rclcpp::Time & /*time*/, const rclcpp::Duration & period)
 {
 
@@ -177,7 +177,7 @@ hardware_interface::return_type DiffBotSystemHardware::read(
   return hardware_interface::return_type::OK;
 }
 
-hardware_interface::return_type ros2_control_demo_example_2 ::DiffBotSystemHardware::write(
+hardware_interface::return_type spbot_diffdrive ::SPBotDiffDriveHardware::write(
   const rclcpp::Time & /*time*/, const rclcpp::Duration & /*period*/)
 {
   int motor_l_counts_per_loop = wheel_l_.cmd / wheel_l_.rads_per_count / cfg_.loop_rate;
@@ -187,8 +187,8 @@ hardware_interface::return_type ros2_control_demo_example_2 ::DiffBotSystemHardw
   return hardware_interface::return_type::OK;
 }
 
-}  // namespace ros2_control_demo_example_2
+}  // namespace spbot_diffdrive
 
 #include "pluginlib/class_list_macros.hpp"
 PLUGINLIB_EXPORT_CLASS(
-  ros2_control_demo_example_2::DiffBotSystemHardware, hardware_interface::SystemInterface)
+  spbot_diffdrive::SPBotDiffDriveHardware, hardware_interface::SystemInterface)
