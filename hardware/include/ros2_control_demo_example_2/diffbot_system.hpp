@@ -76,23 +76,11 @@ namespace ros2_control_demo_example_2
     hardware_interface::return_type write(
         const rclcpp::Time &time, const rclcpp::Duration &period) override;
 
-    /// Get the logger of the SystemInterface.
-    /**
-     * \return logger of the SystemInterface.
-     */
-    rclcpp::Logger get_logger() const { return *logger_; }
-
-    /// Get the clock of the SystemInterface.
-    /**
-     * \return clock of the SystemInterface.
-     */
-    rclcpp::Clock::SharedPtr get_clock() const { return clock_; }
-
   private:
     ArduinoComms comms_;
     Config cfg_;
-    Wheel wheel_l;
-    Wheel wheel_r;
+    Wheel wheel_l_;
+    Wheel wheel_r_;
   };
 
 } // namespace ros2_control_demo_example_2
