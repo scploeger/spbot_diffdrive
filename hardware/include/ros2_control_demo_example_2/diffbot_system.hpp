@@ -32,6 +32,7 @@
 #include "rclcpp_lifecycle/state.hpp"
 
 #include "ros2_control_demo_example_2/arduino_comms.hpp"
+#include "ros2_control_demo_example_2/wheel.hpp"
 
 namespace ros2_control_demo_example_2
 {
@@ -90,6 +91,8 @@ namespace ros2_control_demo_example_2
   private:
     ArduinoComms comms_;
     Config cfg_;
+    Wheel wheel_l;
+    Wheel wheel_r;
   };
 
 } // namespace ros2_control_demo_example_2
