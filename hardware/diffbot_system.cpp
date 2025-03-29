@@ -148,7 +148,7 @@ std::vector<hardware_interface::CommandInterface> SPBotDiffDriveHardware::export
 hardware_interface::CallbackReturn SPBotDiffDriveHardware::on_configure(
   const rclcpp_lifecycle::State & /*previous_state*/)
 {
-  RCLCPP_INFO(rclcpp::get_logger("DiffBotSystem"), "Configuring ...please wait...");
+  RCLCPP_INFO(rclcpp::get_logger("DiffBotSystem"), "Configuring SPBot diffdrive... please wait...");
 
   comms_.connect(cfg_.device, cfg_.baud_rate, cfg_.timeout_ms);
 
@@ -160,7 +160,7 @@ hardware_interface::CallbackReturn SPBotDiffDriveHardware::on_configure(
 hardware_interface::CallbackReturn SPBotDiffDriveHardware::on_cleanup(
   const rclcpp_lifecycle::State & /*previous_state*/)
 {
-  RCLCPP_INFO(rclcpp::get_logger("DiffBotSystem"), "Cleaning up ...please wait...");
+  RCLCPP_INFO(rclcpp::get_logger("DiffBotSystem"), "Cleaning up SPBot diffdrive ...please wait...");
 
   comms_.disconnect();
 
@@ -172,7 +172,7 @@ hardware_interface::CallbackReturn SPBotDiffDriveHardware::on_cleanup(
 hardware_interface::CallbackReturn SPBotDiffDriveHardware::on_activate( // amything we want to do right before we start using the motors
   const rclcpp_lifecycle::State & /*previous_state*/)
 {
-  RCLCPP_INFO(rclcpp::get_logger("DiffBotSystem"), "Activating ...please wait...");
+  RCLCPP_INFO(rclcpp::get_logger("DiffBotSystem"), "Activating SPBot diffdrive ...please wait...");
   comms_.set_pid_values(cfg_.pid_p,cfg_.pid_d,cfg_.pid_i,cfg_.pid_o);
   RCLCPP_INFO(rclcpp::get_logger("DiffBotSystem"), "Successfully activated!");
 
@@ -182,7 +182,7 @@ hardware_interface::CallbackReturn SPBotDiffDriveHardware::on_activate( // amyth
 hardware_interface::CallbackReturn SPBotDiffDriveHardware::on_deactivate( // anything we want to do right after being done with the motors
   const rclcpp_lifecycle::State & /*previous_state*/)
 {
-  RCLCPP_INFO(rclcpp::get_logger("DiffBotSystem"), "Deactivating ...please wait...");
+  RCLCPP_INFO(rclcpp::get_logger("DiffBotSystem"), "Deactivating SPBot diffdrive ...please wait...");
 
   RCLCPP_INFO(rclcpp::get_logger("DiffBotSystem"), "Successfully deactivated!");
 
