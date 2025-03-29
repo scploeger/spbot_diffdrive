@@ -134,24 +134,44 @@ std::vector<hardware_interface::CommandInterface> SPBotDiffDriveHardware::export
   return command_interfaces;
 }
 
-hardware_interface::CallbackReturn SPBotDiffDriveHardware::on_activate(
+hardware_interface::CallbackReturn SPBotDiffDriveHardware::on_configure(
+  const rclcpp_lifecycle::State & /*previous_state*/)
+{
+  RCLCPP_INFO(rclcpp::get_logger("DiffBotSystem"), "Configuring ...please wait...");
+
+  comms_.connect(cfg_.device, cfg_.baud_rate, cfg_.timeout_ms);
+
+  RCLCPP_INFO(rclcpp::get_logger("DiffBotSystem"), "Successfully Configured!");
+
+  return hardware_interface::CallbackReturn::SUCCESS;
+}
+
+hardware_interface::CallbackReturn SPBotDiffDriveHardware::on_cleanup(
+  const rclcpp_lifecycle::State & /*previous_state*/)
+{
+  RCLCPP_INFO(rclcpp::get_logger("DiffBotSystem"), "Cleaning up ...please wait...");
+
+  comms_.disconnect();
+
+  RCLCPP_INFO(rclcpp::get_logger("DiffBotSystem"), "Successfully cleaned up!");
+
+  return hardware_interface::CallbackReturn::SUCCESS;
+}
+
+hardware_interface::CallbackReturn SPBotDiffDriveHardware::on_activate( // amything we want to do right before we start using the motors
   const rclcpp_lifecycle::State & /*previous_state*/)
 {
   RCLCPP_INFO(rclcpp::get_logger("DiffBotSystem"), "Activating ...please wait...");
-
-  comms_.connect(cfg_.device, cfg_.baud_rate, cfg_.timeout_ms);
 
   RCLCPP_INFO(rclcpp::get_logger("DiffBotSystem"), "Successfully activated!");
 
   return hardware_interface::CallbackReturn::SUCCESS;
 }
 
-hardware_interface::CallbackReturn SPBotDiffDriveHardware::on_deactivate(
+hardware_interface::CallbackReturn SPBotDiffDriveHardware::on_deactivate( // anything we want to do right after being done with the motors
   const rclcpp_lifecycle::State & /*previous_state*/)
 {
   RCLCPP_INFO(rclcpp::get_logger("DiffBotSystem"), "Deactivating ...please wait...");
-
-  comms_.disconnect();
 
   RCLCPP_INFO(rclcpp::get_logger("DiffBotSystem"), "Successfully deactivated!");
 
