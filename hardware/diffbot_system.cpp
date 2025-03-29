@@ -173,7 +173,7 @@ hardware_interface::CallbackReturn SPBotDiffDriveHardware::on_activate( // amyth
   const rclcpp_lifecycle::State & /*previous_state*/)
 {
   RCLCPP_INFO(rclcpp::get_logger("DiffBotSystem"), "Activating ...please wait...");
-  comms_.set_pid_values(cfg_.pid_p,cfg_.pid_d,cfg_.pid_i,cfg_.pid_o)
+  comms_.set_pid_values(cfg_.pid_p,cfg_.pid_d,cfg_.pid_i,cfg_.pid_o);
   RCLCPP_INFO(rclcpp::get_logger("DiffBotSystem"), "Successfully activated!");
 
   return hardware_interface::CallbackReturn::SUCCESS;
