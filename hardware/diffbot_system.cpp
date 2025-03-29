@@ -47,7 +47,18 @@ hardware_interface::CallbackReturn SPBotDiffDriveHardware::on_init( // on_init g
   cfg_.baud_rate = std::stoi(info_.hardware_parameters["baud_rate"]);
   cfg_.timeout_ms = std::stoi(info_.hardware_parameters["timeout_ms"]);
   cfg_.enc_counts_per_rev = std::stoi(info_.hardware_parameters["enc_counts_per_rev"]);
-
+  if (info_.hardware_parameters.count("pid_p") > 0)
+  {
+    cfg_.pid_p = std::stoi(info_.hardware_parameters["pid_p"]);
+    cfg_.pid_d = std::stoi(info_.hardware_parameters["pid_d"]);
+    cfg_.pid_i = std::stoi(info_.hardware_parameters["pid_i"]);
+    cfg_.pid_o = std::stoi(info_.hardware_parameters["pid_o"]);
+  }
+  else
+  {
+    RCLCPP_INFO(rclcpp::get_logger("DiffDriveArduinoHardware"), "PID values not supplied, using defaults.");
+  }
+  
   wheel_l_.setup(cfg_.left_wheel_name, cfg_.enc_counts_per_rev);
   wheel_r_.setup(cfg_.right_wheel_name, cfg_.enc_counts_per_rev);
 
@@ -162,7 +173,7 @@ hardware_interface::CallbackReturn SPBotDiffDriveHardware::on_activate( // amyth
   const rclcpp_lifecycle::State & /*previous_state*/)
 {
   RCLCPP_INFO(rclcpp::get_logger("DiffBotSystem"), "Activating ...please wait...");
-
+  comms_.set_pid_values(cfg_.pid_p,cfg_.pid_d,cfg_.pid_i,cfg_.pid_o)
   RCLCPP_INFO(rclcpp::get_logger("DiffBotSystem"), "Successfully activated!");
 
   return hardware_interface::CallbackReturn::SUCCESS;
